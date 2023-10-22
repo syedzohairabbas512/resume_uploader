@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <title>Resume Uploader</title>
+    <style>
+      #id_gender {
+        list-style-type: none;
+      }
+      
+      #id_job_city {
+        display: inline-flex;
+        padding: 0.5em;
+      }
+      
+      #id_job_city_0,
+      #id_job_city_1,
+      #id_job_city_2,
+      #id_job_city_3,
+      #id_job_city_4 {
+        margin-left: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mb-5">
+      <h1 class="alert-danger text-center p-3">Resume Uploader</h1>
+      <div class="row">
+        <div class="col-sm-8">
+          <form action="" method="post" class="shadow p-5" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for i in form %}
+              <div class="form-group mb-3">
+                {{ i.label_tag }}{{ i }} <small class="danger">{{ fm.errors|striptags }}</small>
+              </div>
+            {% endfor %}
+            <input type="submit" value="submit" class="btn btn-primary" name="" id="" />
+            {% if form.non_field_errors %}
+              {% for error in form.non_field_errors %}
+                <p class="alert alert-danger my-3">{{ error }}</p>
+              {% endfor %}
+            {% endif %}
+          </form>
+        </div>
+        <div class="col-sm-4">
+          <h4 class="text-center m-3"><ul>List of Candidates</ul></h4>
+
+          {% for candidate in candidates %}
+          <a class="style" style="text-decoration: bullets" href="{% url 'candidate' candidate.id %}">{{ candidate.name }}</a>
+          <hr />
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+      $(function () {
+        $('#datepicker').datepicker()
+      })
+    </script>
+  </body>
+</html>
